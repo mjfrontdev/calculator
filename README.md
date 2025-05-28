@@ -30,7 +30,7 @@
 ## 🔧 نصب و راه‌اندازی
 1. مخزن را کلون کنید:
    ```bash
-   git clone https://github.com/yourusername/calculator.git
+  [ git clone https://github.com/yourusername/calculator.git](https://github.com/mjfrontdev/calculator.git)
    ```
 2. به دایرکتوری پروژه بروید:
    ```bash
