@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ماشین حساب</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="calculator bg-white rounded-lg shadow-xl p-6 w-80">
+      <div class="calc-header flex items-center justify-between mb-2 px-1">
+        <div class="flex flex-col">
+          <span
+            class="font-extrabold text-lg text-white tracking-widest brand-title"
+            >CASIO</span
+          >
+          <span class="text-xs text-pink-200 font-semibold model-title"
+            >fx-82MS</span
+          >
+        </div>
+        <button
+          id="theme-toggle"
+          class="theme-toggle-btn bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-full w-9 h-9 flex items-center justify-center text-xl transition"
+        >
+          🌙
+        </button>
+      </div>
+      <div class="display bg-gray-100 rounded-lg p-4 mb-4 text-right">
+        <div id="previous-operand" class="text-gray-500 text-sm h-6"></div>
+        <div id="current-operand" class="text-3xl font-bold"></div>
+      </div>
+      <div class="buttons grid grid-cols-4 gap-2">
+        <button class="operator" data-action="divide">÷</button>
+        <button class="operator" data-action="percent">%</button>
+        <button class="operator" data-action="delete">DEL</button>
+        <button class="operator" data-action="clear">C</button>
+
+        <button class="operator" data-action="multiply">×</button>
+        <button class="number" data-number="9">9</button>
+        <button class="number" data-number="8">8</button>
+        <button class="number" data-number="7">7</button>
+
+        <button class="operator" data-action="subtract">-</button>
+        <button class="number" data-number="6">6</button>
+        <button class="number" data-number="5">5</button>
+        <button class="number" data-number="4">4</button>
+
+        <button class="operator" data-action="add">+</button>
+        <button class="number" data-number="3">3</button>
+        <button class="number" data-number="2">2</button>
+        <button class="number" data-number="1">1</button>
+
+        <button class="equals col-span-2" data-action="equals">=</button>
+        <button class="number" data-number=".">.</button>
+        <button class="number" data-number="0">0</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
