@@ -142,15 +142,24 @@ operationButtons.forEach((button) => {
 // --- تغییر تم ---
 const themeToggleBtn = document.getElementById("theme-toggle");
 const body = document.body;
+const calculatorBox = document.querySelector('.calculator');
 
 function setTheme(isDark) {
   if (isDark) {
     body.classList.add("dark");
-    themeToggleBtn.innerText = "☀️";
+    themeToggleBtn.innerText = "\u2600\ufe0f";
   } else {
     body.classList.remove("dark");
-    themeToggleBtn.innerText = "🌙";
+    themeToggleBtn.innerText = "\ud83c\udf19";
   }
+  // انیمیشن تغییر تم
+  anime({
+    targets: calculatorBox,
+    scale: [0.97, 1],
+    rotateZ: [0, 2, -2, 0],
+    duration: 500,
+    easing: 'easeInOutElastic(1, .7)'
+  });
 }
 
 // ذخیره تم در localStorage
@@ -162,4 +171,51 @@ themeToggleBtn.addEventListener("click", () => {
   const isDark = !body.classList.contains("dark");
   setTheme(isDark);
   localStorage.setItem("calc-theme", isDark ? "dark" : "light");
+});
+
+// --- افکت موجی و لرزش برای دکمه‌ها ---
+const allButtons = document.querySelectorAll('.buttons button');
+allButtons.forEach(btn => {
+  btn.classList.add('animated');
+  btn.addEventListener('click', function(e) {
+    // افکت موجی
+    btn.classList.remove('active');
+    void btn.offsetWidth; // reflow
+    btn.classList.add('active');
+    setTimeout(() => btn.classList.remove('active'), 400);
+    // افکت لرزش با animejs
+    anime({
+      targets: btn,
+      translateX: [0, -4, 4, -2, 2, 0],
+      duration: 350,
+      easing: 'easeInOutSine'
+    });
+  });
+});
+
+// --- مقداردهی اولیه AOS ---
+if (typeof AOS !== 'undefined') {
+  AOS.init({
+    once: true,
+    duration: 800,
+    easing: 'ease-in-out',
+  });
+}
+
+// --- افکت پالس برای نمایشگر هنگام نمایش نتیجه ---
+const displayBox = document.querySelector('.display');
+const equalsBtn = document.querySelector('.equals');
+
+function pulseDisplay() {
+  displayBox.classList.remove('pulse');
+  void displayBox.offsetWidth;
+  displayBox.classList.add('pulse');
+}
+
+displayBox.addEventListener('animationend', function() {
+  displayBox.classList.remove('pulse');
+});
+
+equalsBtn.addEventListener('click', () => {
+  setTimeout(pulseDisplay, 50);
 });

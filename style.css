@@ -1,3 +1,4 @@
+/* --- مدرن‌سازی و افکت‌های انیمیشنی --- */
 * {
     margin: 0;
     padding: 0;
@@ -6,24 +7,46 @@
 }
 
 body {
-    background: #f3f4f6;
+    background: linear-gradient(135deg, #f3f4f6 0%, #c7d2fe 100%);
+    min-height: 100vh;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-bgMove {
+  animation: bgMove 8s ease-in-out infinite;
+  background-size: 200% 200%;
 }
 
 .calculator {
-    background: #3b4a5a;
+    background: rgba(255,255,255,0.7);
     border-radius: 1.5rem;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
     width: 340px;
-    padding: 2rem 1.2rem 1.5rem 1.2rem;
+    padding: 2.5rem 1.5rem 2rem 1.5rem;
     margin: 2rem auto;
-    border: 1px solid #2c3744;
+    border: 1.5px solid #a5b4fc;
     position: relative;
+    backdrop-filter: blur(16px) saturate(180%);
+    animation: fadeInUp 1s cubic-bezier(.23,1.01,.32,1) both, floaty 5s ease-in-out infinite;
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: none; }
 }
 
 .calc-header {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     padding-bottom: 0.2rem;
-    border-bottom: 1px solid #4b5a6a;
+    border-bottom: 1px solid #dbeafe;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,16 +55,16 @@ body {
 
 .brand-title {
     font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
-    letter-spacing: 0.15em;
-    color: #fff;
-    text-shadow: 0 1px 2px #2228, 0 0 2px #fff4;
-    font-size: 1.3rem;
+    letter-spacing: 0.18em;
+    color: #1e3a8a;
+    text-shadow: 0 2px 8px #a5b4fc44, 0 0 2px #fff4;
+    font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 0.1rem;
 }
 
 .model-title {
-    color: #ffb6c1;
+    color: #f472b6;
     letter-spacing: 0.08em;
     font-size: 1rem;
     margin-top: -0.2rem;
@@ -49,106 +72,158 @@ body {
 }
 
 .theme-toggle-btn {
-    box-shadow: 0 2px 8px #0001;
+    box-shadow: 0 2px 8px #a5b4fc33;
     border: none;
     outline: none;
     cursor: pointer;
-    font-size: 1.3rem;
-    transition: background 0.2s, color 0.2s;
-    width: 2.3rem;
-    height: 2.3rem;
+    font-size: 1.5rem;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    width: 2.5rem;
+    height: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 0.2rem;
     margin-left: 0.2rem;
+    background: #e0e7ff;
 }
 
 .theme-toggle-btn:active {
-    background: #e0e7ef;
+    background: #c7d2fe;
+    transform: scale(1.1) rotate(-10deg);
 }
 
 .display {
-    background: #f7fafc;
-    border-radius: 0.5rem;
-    border: 2px solid #d1d5db;
-    color: #222;
+    background: rgba(255,255,255,0.8);
+    border-radius: 1rem;
+    border: 2px solid #a5b4fc;
+    color: #1e293b;
     font-family: 'Consolas', monospace;
-    font-size: 1.6rem;
+    font-size: 2rem;
     margin-bottom: 1.5rem;
     min-height: 3.2rem;
-    padding: 0.7rem 1rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    padding: 1rem 1.2rem;
+    box-shadow: 0 2px 12px rgba(59,130,246,0.08);
+    transition: box-shadow 0.3s, border 0.3s;
+}
+
+.display:focus-within, .display.active {
+    box-shadow: 0 4px 24px #818cf833;
+    border-color: #6366f1;
 }
 
 .buttons {
-    gap: 0.6rem !important;
+    gap: 1rem !important;
 }
 
 button {
     border-radius: 1.2rem;
-    font-size: 1.2rem;
-    font-weight: 600;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    font-size: 1.3rem;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.08);
     border: none;
     outline: none;
-    transition: all 0.15s;
+    transition: all 0.18s cubic-bezier(.4,0,.2,1);
     padding: 0;
-    height: 3.1rem;
+    height: 3.2rem;
     min-width: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+button.number {
+    background: #e0e7ff;
+    color: #1e293b;
+    /* فونت عددی جذاب */
+    font-family: 'DSEG7Classic', monospace !important;
+    letter-spacing: 0.04em;
+    font-size: 1.5rem;
+    box-shadow: 0 2px 12px #818cf822, 0 0 0 #fff0;
+    background: linear-gradient(135deg, #e0e7ff 60%, #c7d2fe 100%);
+    border: 1.5px solid #a5b4fc;
+    transition: box-shadow 0.25s, background 0.25s, border 0.25s, color 0.25s;
+}
+button.number:hover {
+    background: linear-gradient(135deg, #c7d2fe 60%, #818cf8 100%);
+    color: #fff;
+    box-shadow: 0 0 24px 8px #818cf855, 0 0 0 #fff0;
+    border-color: #6366f1;
+}
+.display {
+    /* فونت عددی جذاب برای نمایشگر */
+    font-family: 'DSEG7Classic', monospace !important;
+    letter-spacing: 0.04em;
+    font-size: 2.2rem;
 }
 
+
 button.number {
-    background: #e5e7eb;
-    color: #222;
+    background: #e0e7ff;
+    color: #1e293b;
 }
 
 button.operator {
-    background: #5c6e7c;
+    background: linear-gradient(135deg, #818cf8 0%, #f472b6 100%);
     color: #fff;
+    box-shadow: 0 2px 8px #818cf822;
 }
 
 button[data-action="clear"],
 button[data-action="delete"] {
-    background: #e57373;
+    background: #f472b6;
     color: #fff;
 }
 
 button:active {
     transform: scale(0.96);
     filter: brightness(0.95);
+    box-shadow: 0 2px 16px #818cf855;
+}
+
+button:focus {
+    outline: 2px solid #6366f1;
 }
 
 .equals {
-    background: #fbc02d !important;
+    background: linear-gradient(90deg, #fbc02d 60%, #f472b6 100%) !important;
     color: #fff !important;
     grid-column: span 2 / span 2;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    box-shadow: 0 2px 16px #fbc02d33;
 }
 
-.calculator::before {
-    content: 'CASIO';
-    position: absolute;
-    top: 1.1rem;
-    left: 1.2rem;
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.1rem;
-    letter-spacing: 0.1rem;
-    opacity: 0.8;
+/* افکت glow برای دکمه مساوی و عملیات */
+.equals, button.operator {
+  box-shadow: 0 0 16px 2px #f472b6cc, 0 0 32px 4px #818cf888;
+  position: relative;
+  z-index: 1;
+}
+.equals:hover, button.operator:hover {
+  box-shadow: 0 0 32px 8px #fbc02dcc, 0 0 48px 12px #818cf8cc;
+  filter: brightness(1.1) saturate(1.2);
 }
 
-.calculator::after {
-    content: 'fx-82MS';
-    position: absolute;
-    top: 1.1rem;
-    right: 1.2rem;
-    color: #fff;
-    font-size: 1rem;
-    opacity: 0.7;
+/* افکت هاله رنگی هنگام هاور روی دکمه‌ها */
+button:not(.equals):hover {
+  box-shadow: 0 0 16px 4px #818cf855, 0 0 32px 8px #f472b655;
+  filter: brightness(1.08);
+}
+
+/* افکت پالس برای نمایشگر هنگام نمایش نتیجه */
+.display.pulse {
+  animation: pulseGlow 0.7s;
+}
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 #fbc02d55; }
+  70% { box-shadow: 0 0 24px 12px #fbc02d88; }
+  100% { box-shadow: 0 0 0 0 #fbc02d00; }
+}
+
+.calculator::before, .calculator::after {
+    display: none;
 }
 
 /* --- تم تاریک --- */
@@ -157,14 +232,14 @@ body.dark {
 }
 
 body.dark .calculator {
-    background: #232f3e;
-    border-color: #1a222c;
+    background: #232f3e99;
+    border-color: #1e293b;
 }
 
 body.dark .display {
-    background: #23272f;
+    background: #23272fcc;
     color: #fff;
-    border-color: #374151;
+    border-color: #6366f1;
 }
 
 body.dark .brand-title {
@@ -172,11 +247,11 @@ body.dark .brand-title {
 }
 
 body.dark .model-title {
-    color: #ffb6c1;
+    color: #f472b6;
 }
 
 body.dark .theme-toggle-btn {
-    background: #374151;
+    background: #6366f1;
     color: #ffe;
 }
 
@@ -186,17 +261,41 @@ body.dark button.number {
 }
 
 body.dark button.operator {
-    background: #42526b;
+    background: linear-gradient(135deg, #6366f1 0%, #f472b6 100%);
     color: #fff;
 }
 
 body.dark button[data-action="clear"],
 body.dark button[data-action="delete"] {
-    background: #e57373;
+    background: #f472b6;
     color: #fff;
 }
 
 body.dark .equals {
-    background: #fbc02d !important;
-    color: #23272f !important;
+    background: linear-gradient(90deg, #fbc02d 60%, #f472b6 100%) !important;
+    color: #fff !important;
+}
+
+/* --- افکت‌های انیمیشنی دکمه‌ها --- */
+button.animated {
+    z-index: 1;
+}
+button.animated::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(59,130,246,0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s cubic-bezier(.4,0,.2,1), height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.4s;
+    opacity: 0.7;
+    pointer-events: none;
+}
+button.animated.active::after {
+    width: 180%;
+    height: 180%;
+    opacity: 0;
 }
