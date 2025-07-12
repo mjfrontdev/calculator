@@ -5,57 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ماشین حساب</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- AOS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link rel="stylesheet" href="style.css" />
+    <!-- فونت Segment7 (DSEG7Classic) برای اعداد ماشین حساب -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dseg-fonts/webfont/DSEG7Classic/DSEG7Classic-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <style>
+      @font-face {
+        font-family: 'DSEG7Classic';
+        src: url('https://cdn.jsdelivr.net/npm/dseg-fonts/webfont/DSEG7Classic/DSEG7Classic-Regular.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      .font-segment {
+        font-family: 'DSEG7Classic', monospace !important;
+        letter-spacing: 0.04em;
+      }
+    </style>
   </head>
-  <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="calculator bg-white rounded-lg shadow-xl p-6 w-80">
-      <div class="calc-header flex items-center justify-between mb-2 px-1">
-        <div class="flex flex-col">
-          <span
-            class="font-extrabold text-lg text-white tracking-widest brand-title"
-            >CASIO</span
-          >
-          <span class="text-xs text-pink-200 font-semibold model-title"
-            >fx-82MS</span
-          >
+  <body class="bg-gradient-to-br from-gray-100 to-blue-100 min-h-screen flex items-center justify-center overflow-x-hidden">
+    <div class="relative">
+      <!-- نورپردازی متحرک پس‌زمینه -->
+      <div class="absolute -inset-8 z-0 pointer-events-none">
+        <div class="w-full h-full bg-gradient-to-tr from-pink-300 via-blue-200 to-yellow-100 opacity-60 blur-2xl animate-bgMove rounded-3xl"></div>
+      </div>
+      <div class="calculator bg-white/70 backdrop-blur-lg rounded-3xl shadow-2xl p-8 w-80 border border-blue-200 relative animate-fadeInUp z-10" data-aos="zoom-in" data-aos-duration="900">
+        <div class="calc-header flex items-center justify-between mb-4 px-2" data-aos="fade-down" data-aos-delay="200">
+          <div class="flex flex-col">
+            <span class="font-extrabold text-2xl text-blue-900 tracking-widest brand-title drop-shadow-lg">CASIO</span>
+            <span class="text-xs text-pink-400 font-semibold model-title">fx-82MS</span>
+          </div>
+          <button id="theme-toggle" class="theme-toggle-btn bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-full w-10 h-10 flex items-center justify-center text-2xl shadow transition-all duration-300">
+            🌙
+          </button>
         </div>
-        <button
-          id="theme-toggle"
-          class="theme-toggle-btn bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-full w-9 h-9 flex items-center justify-center text-xl transition"
-        >
-          🌙
-        </button>
-      </div>
-      <div class="display bg-gray-100 rounded-lg p-4 mb-4 text-right">
-        <div id="previous-operand" class="text-gray-500 text-sm h-6"></div>
-        <div id="current-operand" class="text-3xl font-bold"></div>
-      </div>
-      <div class="buttons grid grid-cols-4 gap-2">
-        <button class="operator" data-action="divide">÷</button>
-        <button class="operator" data-action="percent">%</button>
-        <button class="operator" data-action="delete">DEL</button>
-        <button class="operator" data-action="clear">C</button>
+        <div class="display bg-white/80 rounded-xl p-5 mb-6 text-right border-2 border-blue-100 shadow-inner font-segment" data-aos="fade-up" data-aos-delay="350">
+          <div id="previous-operand" class="text-blue-400 text-sm h-6"></div>
+          <div id="current-operand" class="text-4xl font-extrabold text-blue-900 font-segment"></div>
+        </div>
+        <div class="buttons grid grid-cols-4 gap-3" data-aos="fade-up" data-aos-delay="500">
+          <button class="operator" data-action="divide">÷</button>
+          <button class="operator" data-action="percent">%</button>
+          <button class="operator" data-action="delete">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mr-1 -ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+          <button class="operator" data-action="clear">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mr-1 -ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" /></svg>
+          </button>
 
-        <button class="operator" data-action="multiply">×</button>
-        <button class="number" data-number="9">9</button>
-        <button class="number" data-number="8">8</button>
-        <button class="number" data-number="7">7</button>
+          <button class="operator" data-action="multiply">×</button>
+          <button class="number font-segment" data-number="9">9</button>
+          <button class="number font-segment" data-number="8">8</button>
+          <button class="number font-segment" data-number="7">7</button>
 
-        <button class="operator" data-action="subtract">-</button>
-        <button class="number" data-number="6">6</button>
-        <button class="number" data-number="5">5</button>
-        <button class="number" data-number="4">4</button>
+          <button class="operator" data-action="subtract">-</button>
+          <button class="number font-segment" data-number="6">6</button>
+          <button class="number font-segment" data-number="5">5</button>
+          <button class="number font-segment" data-number="4">4</button>
 
-        <button class="operator" data-action="add">+</button>
-        <button class="number" data-number="3">3</button>
-        <button class="number" data-number="2">2</button>
-        <button class="number" data-number="1">1</button>
+          <button class="operator" data-action="add">+</button>
+          <button class="number font-segment" data-number="3">3</button>
+          <button class="number font-segment" data-number="2">2</button>
+          <button class="number font-segment" data-number="1">1</button>
 
-        <button class="equals col-span-2" data-action="equals">=</button>
-        <button class="number" data-number=".">.</button>
-        <button class="number" data-number="0">0</button>
+          <button class="equals col-span-2" data-action="equals">=</button>
+          <button class="number font-segment" data-number=".">.</button>
+          <button class="number font-segment" data-number="0">0</button>
+        </div>
       </div>
     </div>
     <script src="script.js"></script>
+    <script>
+      AOS.init();
+    </script>
   </body>
 </html>
